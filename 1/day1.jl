@@ -43,12 +43,12 @@ function +(position::Position, by::Int)::Tuple{Position, Int}
         throw(ArgumentError("Argument `by` must be non-negative. by=$by"))
     end
     new_position = position.position + by
-    zero_passes = 0
+    zero_clicks = 0
     while new_position > position.max_position
         new_position -= position.max_position + 1
-        zero_passes +=1
+        zero_clicks +=1
     end
-    return Position(new_position, position.max_position), zero_passes
+    return Position(new_position, position.max_position), zero_clicks
 end
 
 function -(position::Position, by::Int)::Tuple{Position, Int}
@@ -56,12 +56,21 @@ function -(position::Position, by::Int)::Tuple{Position, Int}
         throw(ArgumentError("Argument `by` must be non-negative. by=$by"))
     end
     new_position = position.position - by
-    zero_passes = 0
+    zero_clicks = 0
     while new_position < 0
+        # zero pass
         new_position += position.max_position + 1
-        zero_passes += 1
+        zero_clicks += 1
     end
-    return Position(new_position, position.max_position), zero_passes
+    if new_position == 0
+        # stopping right at zero without going further
+        zero_clicks += 1
+    end
+    if position.position == 0
+        # started already at 0 so the first underflow is not a click ending at zero or passing it
+        zero_clicks -= 1
+    end
+    return Position(new_position, position.max_position), zero_clicks
 end
 
 function moveby(position::Position, instruction::Tuple{Char, Int})::Tuple{Position, Int}
@@ -76,15 +85,15 @@ end
 
 function zeropasses(position:: Position, instructions::Vector{Tuple{Char, Int}})::Tuple{Int, Int}
     zero_stops = 0
-    zero_passes = 0
+    zero_clicks = 0
     for instruction in instructions
         position, zp = moveby(position, instruction)
         if position.position == 0
             zero_stops += 1
         end
-        zero_passes += zp
+        zero_clicks += zp
     end
-    return zero_stops, zero_passes
+    return zero_stops, zero_clicks
 end
 
 function main(file_name::String)

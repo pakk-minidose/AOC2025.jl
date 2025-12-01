@@ -35,12 +35,17 @@ end
     @testset "addition" begin
         @test Position(10) + 4 == (Position(14), 0)
         @test Position(10, 10) + 4 == (Position(3, 10), 1)
+        @test Position(50) + 1000 == (Position(50), 10)
         @test_throws ArgumentError Position(10) + (-10)
 
     end
     @testset "substraction" begin
         @test Position(20) - 4 == (Position(16), 0)
-        @test Position(0, 10) - 5 == (Position(6, 10), 1)
+        @test Position(0, 10) - 5 == (Position(6, 10), 0)
+        @test Position(1, 10) - 5 == (Position(7, 10), 1)
+        @test Position(5) - 5 == (Position(0), 1)
+        @test Position(50) - 1000 == (Position(50), 10)
+        @test Position(79, 99) - 379 == (Position(0), 4)
         @test_throws ArgumentError Position(10) - (-3)
     end
 end
