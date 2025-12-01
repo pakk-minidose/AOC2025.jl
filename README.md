@@ -19,3 +19,5 @@ position = Position(50)
 
 This gives us the following results:
 ![day1 benchmark results](day1_benchmark.png)
+
+In the same folder, you can also find the `day1_optimized.jl` source file, where I tried to remove the for loop from the + and - operations. Yet, the benchmark of this version provides basically the same times as the original version. Profiler shows that the most time is spent in the integer division (÷) operations, seconded with a large gap by the instructions list iteration.
