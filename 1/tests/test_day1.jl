@@ -33,24 +33,24 @@ end
 
 @testset "Position operations" begin
     @testset "addition" begin
-        @test Position(10) + 4 == Position(14)
-        @test Position(10, 10) + 4 == Position(3, 10)
+        @test Position(10) + 4 == (Position(14), 0)
+        @test Position(10, 10) + 4 == (Position(3, 10), 1)
         @test_throws ArgumentError Position(10) + (-10)
 
     end
     @testset "substraction" begin
-        @test Position(20) - 4 == Position(16)
-        @test Position(0, 10) - 5 == Position(6, 10)
+        @test Position(20) - 4 == (Position(16), 0)
+        @test Position(0, 10) - 5 == (Position(6, 10), 1)
         @test_throws ArgumentError Position(10) - (-3)
     end
 end
 
 @testset "moveby" begin
-    @test moveby(Position(10), ('R', 5)) == Position(15)
-    @test moveby(Position(10), ('L', 2)) == Position(8)
+    @test moveby(Position(10), ('R', 5)) == (Position(15), 0)
+    @test moveby(Position(10), ('L', 2)) == (Position(8), 0)
     @test_throws ArgumentError moveby(Position(10), ('B', 2))
 end
 
 @testset "aoc_example_input" begin
-    @test main("mini_day1.txt") == 3
+    @test main("mini_day1.txt") == (3, 6)
 end

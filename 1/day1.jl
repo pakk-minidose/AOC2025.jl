@@ -38,29 +38,33 @@ struct Position
     end
 end
 
-function +(position::Position, by::Int)::Position
+function +(position::Position, by::Int)::Tuple{Position, Int}
     if by < 0
         throw(ArgumentError("Argument `by` must be non-negative. by=$by"))
     end
     new_position = position.position + by
+    zero_passes = 0
     while new_position > position.max_position
         new_position -= position.max_position + 1
+        zero_passes +=1
     end
-    return Position(new_position, position.max_position)
+    return Position(new_position, position.max_position), zero_passes
 end
 
-function -(position::Position, by::Int)::Position
+function -(position::Position, by::Int)::Tuple{Position, Int}
     if by < 0
         throw(ArgumentError("Argument `by` must be non-negative. by=$by"))
     end
     new_position = position.position - by
+    zero_passes = 0
     while new_position < 0
         new_position += position.max_position + 1
+        zero_passes += 1
     end
-    return Position(new_position, position.max_position)
+    return Position(new_position, position.max_position), zero_passes
 end
 
-function moveby(position::Position, instruction::Tuple{Char, Int})::Position
+function moveby(position::Position, instruction::Tuple{Char, Int})::Tuple{Position, Int}
     if instruction[1] == 'R'
         return position + instruction[2]
     elseif instruction[1] == 'L'
@@ -70,15 +74,17 @@ function moveby(position::Position, instruction::Tuple{Char, Int})::Position
     end
 end
 
-function zeropasses(position:: Position, instructions::Vector{Tuple{Char, Int}})::Int
+function zeropasses(position:: Position, instructions::Vector{Tuple{Char, Int}})::Tuple{Int, Int}
+    zero_stops = 0
     zero_passes = 0
     for instruction in instructions
-        position = moveby(position, instruction)
+        position, zp = moveby(position, instruction)
         if position.position == 0
-            zero_passes += 1
+            zero_stops += 1
         end
+        zero_passes += zp
     end
-    return zero_passes
+    return zero_stops, zero_passes
 end
 
 function main(file_name::String)
