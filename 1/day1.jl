@@ -100,6 +100,5 @@ function main(file_name::String)
     instructions = parseinput(read_input_file(input_file_path(file_name)))
     position = Position(50)
     z_passes = zeropasses(position, instructions)
-    println(z_passes)
     return z_passes
 end
