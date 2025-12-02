@@ -2,16 +2,18 @@ include("../utils/read_input.jl")
 using .InputLoader
 import Base: +, -
 
-function loadinput()::String
-    return 
-end
 
 function parseinput(input::String)::Vector{Tuple{Char, Int}}
-    return [
-            (line[1], parse(Int, line[2:end])) 
-            for line in split(input, '\n') if !isempty(line)
-        ]
+    split_input = split(input, '\n')
+    len_input = length(split_input) - 1
+    results = Vector{Tuple{Char, Int}}(undef, len_input)
+    Threads.@threads for line_no in 1:len_input
+        line = split_input[line_no]
+        results[line_no] = (line[1], parse(Int, line[2:end]))
+    end
+    return results
 end
+
 
 struct Position
     position::Int
@@ -86,13 +88,14 @@ function main(file_name::String)
 end
 
 #=
+# run the Julia with `julia --threads auto`
 using Pkg
 Pkg.activate(".")
 using BenchmarkTools
 include("./1/day1_optimized.jl")
-const input = parseinput(read_input_file(input_file_path("day1__part3.txt")))
+const input = read_input_file(input_file_path("day1__part3.txt"))
 const position = Position(50)
-@benchmark zeropasses($position, $input)
+@benchmark zeropasses($position, parseinput($input))
 =#
 
 #=

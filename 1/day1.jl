@@ -2,9 +2,6 @@ include("../utils/read_input.jl")
 using .InputLoader
 import Base: +, -
 
-function loadinput()::String
-    return 
-end
 
 function parseinput(input::String)::Vector{Tuple{Char, Int}}
     return [
