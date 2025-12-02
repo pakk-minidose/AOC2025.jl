@@ -20,10 +20,30 @@ end
     @test isdoublesequence(123123)
 end
 
+@testset "isrepeatedsequence" begin
+    @test isrepeatedsequence(55)
+    @test isrepeatedsequence(6464)
+    @test isrepeatedsequence(123123)
+    @test isrepeatedsequence(12341234)
+    @test isrepeatedsequence(123123123)
+    @test isrepeatedsequence(1212121212)
+    @test isrepeatedsequence(1111111)
+
+    @test !isrepeatedsequence(1221)
+    @test !isrepeatedsequence(123)
+    @test !isrepeatedsequence(121213)
+end
+
 @testset "mini input" begin
     input = read_input_file(input_file_path("mini_day2.txt"))
     @test parseinput(input) == mini_input_expected
 
-    @test doublesequences(parseinput(input)) == [11, 22, 99, 1010, 1188511885, 222222, 446446, 38593859]
-    @test sum(doublesequences(parseinput(input))) == 1227775554
+    @testset "part 1" begin
+        @test doublesequences(parseinput(input)) == [11, 22, 99, 1010, 1188511885, 222222, 446446, 38593859]
+        @test sum(doublesequences(parseinput(input))) == 1227775554
+    end
+    @testset "part 2" begin
+        @test repeatedsequences(parseinput(input)) == [11, 22, 99, 111, 999, 1010, 1188511885, 222222, 446446, 38593859, 565656, 824824824, 2121212121]
+        @test sum(repeatedsequences(parseinput(input))) == 4174379265
+    end
 end

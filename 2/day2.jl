@@ -31,11 +31,46 @@ function doublesequences(ranges::Vector{UnitRange{Int64}})::Vector{Int}
     return doubles
 end
 
+function isrepeatedsequence(i)
+    s = string(i)
+    for ix in 1:(length(s)-1)
+        div, rem = divrem(length(s), ix)
+        if rem != 0
+            continue
+        end
+        if s[1:ix]^div == s
+            return true
+        end
+    end
+    return false
+end
+
+function repeatedsequences(ranges)
+    repeatedsequences = []
+    for range in ranges
+        for n in range
+            if isrepeatedsequence(n)
+                push!(repeatedsequences, n)
+            end
+        end
+    end
+    return repeatedsequences
+end
+
 """
 solves part 1 of the day 2 puzzle
 """
-function main()
+function main1()
     ranges = parseinput(read_input_file(input_file_path("day2.txt")))
     doubles = doublesequences(ranges)
     println(sum(doubles))
+end
+
+"""
+solves part 2 of the day 2 puzzle
+"""
+function main2()
+    ranges = parseinput(read_input_file(input_file_path("day2.txt")))
+    repeats = repeatedsequences(ranges)
+    println(sum(repeats))
 end
