@@ -90,7 +90,7 @@ using Pkg
 Pkg.activate(".")
 using BenchmarkTools
 include("./1/day1_optimized.jl")
-const input = parseinput(read_input_file(input_file_path("day1.txt")))
+const input = parseinput(read_input_file(input_file_path("day1__part3.txt")))
 const position = Position(50)
 @benchmark zeropasses($position, $input)
 =#
@@ -102,7 +102,7 @@ using Profile
 
 include("./1/day1_optimized.jl")
 
-const input = parseinput(read_input_file(input_file_path("day1.txt")))
+const input = parseinput(read_input_file(input_file_path("day1__part3.txt")))
 const position = Position(50)
 
 function profiled(p, i)
