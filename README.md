@@ -24,3 +24,12 @@ For the extra large input `day1__part3.txt` this does not finish within several 
 
 The optimized version in `day1_optimized.jl` does finish on the `day1__part3.txt` with the following run times:
 ![day1 optimized benchmark results](day1_optimized_benchmark.png)
+
+If we include the parsing of the input string, the times are:
+![day1 optimized benchmark results with input parsing](day1_optimized_parsing_benchmark.png)
+
+I decided to speed up the parsing by using multiple threads. The results for the `julia --threads auto` (means 6 threads on my machine) and `julia --threads 4` are below:  
+**threads auto**  
+![day1 optimized benchmark results with input parsing and auto threads](day1_optimized_auto_threaded_parsing_benchmark.png)  
+**threads 4**  
+![day1 optimized benchmark results with input parsing and 4 threads](day1_optimized_4_threaded_parsing_benchmark.png)  
