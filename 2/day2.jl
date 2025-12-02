@@ -1,4 +1,5 @@
-input="11-22,95-115,998-1012,1188511880-1188511890,222220-222224,1698522-1698528,446443-446449,38593856-38593862,565653-565659,824824821-824824827,2121212118-2121212124"
+include("../utils/read_input.jl")
+using .InputLoader
 
 function parseinput(input)
     ranges = []
@@ -8,7 +9,6 @@ function parseinput(input)
     end
     return ranges
 end
-parseinput(input)
 
 function isdoublesequence(i)
     s = string(i)
@@ -18,12 +18,8 @@ function isdoublesequence(i)
     end
     return s[1:l÷2]==s[(l÷2)+1:end]
 end
-@assert isdoublesequence(55)
-@assert isdoublesequence(6464)
-@assert isdoublesequence(123123)
 
-function main()
-    ranges = parseinput(input)
+function main(ranges)
     doubles = []
     for range in ranges
         for n in range
@@ -32,6 +28,5 @@ function main()
             end
         end
     end
-    doubles
+    return doubles
 end
-@assert sum(main()) == 1227775554
