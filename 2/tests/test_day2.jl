@@ -24,6 +24,6 @@ end
     input = read_input_file(input_file_path("mini_day2.txt"))
     @test parseinput(input) == mini_input_expected
 
-    @test main(parseinput(input)) == [11, 22, 99, 1010, 1188511885, 222222, 446446, 38593859]
-    @test sum(main(parseinput(input))) == 1227775554
+    @test doublesequences(parseinput(input)) == [11, 22, 99, 1010, 1188511885, 222222, 446446, 38593859]
+    @test sum(doublesequences(parseinput(input))) == 1227775554
 end
