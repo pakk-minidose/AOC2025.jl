@@ -1,16 +1,23 @@
 include("../utils/read_input.jl")
 using .InputLoader
 
-function highestjoltage(bank::String)
+function highestjoltage(bank::String, ndigits::Int)::Int
     int_bank = [parse(Int, c) for c in bank]
-    first_ix = argmax(int_bank[1:end-1])
-    second_ix = argmax(int_bank[(first_ix+1):end]) + first_ix
-    return int_bank[first_ix]*10 + int_bank[second_ix]
+    endoffset = ndigits - 1
+    startoffset = 0
+    indices = []
+    for n in 1:ndigits
+        ix = argmax(int_bank[(startoffset + 1):(end-endoffset)]) + startoffset
+        push!(indices, ix)
+        startoffset = ix
+        endoffset = ndigits - n - 1
+    end
+    result = sum(int_bank[ix]*10^(n-1) for (n, ix) in enumerate(reverse(indices)))
+    return result
 end
 
-
-function totaljoltage(input)
-    sum(highestjoltage(row) for row in eachline(IOBuffer(input)))
+function totaljoltage(input, ndigits)
+    sum(highestjoltage(row, ndigits) for row in eachline(IOBuffer(input)))
 end
 
 
@@ -19,5 +26,5 @@ Solves day 3 part 1
 """
 function main1()
     input = read_input_file(input_file_path("day3.txt"))
-    println(totaljoltage(input))
+    println(totaljoltage(input, 2))
 end
