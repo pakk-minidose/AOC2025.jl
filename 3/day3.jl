@@ -5,7 +5,7 @@ function highestjoltage(bank::String, ndigits::Int)::Int
     int_bank = [parse(Int, c) for c in bank]
     endoffset = ndigits - 1
     startoffset = 0
-    indices = []
+    indices = Vector{Int}(undef, 0)
     for n in 1:ndigits
         ix = argmax(int_bank[(startoffset + 1):(end-endoffset)]) + startoffset
         push!(indices, ix)

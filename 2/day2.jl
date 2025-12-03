@@ -74,3 +74,11 @@ function main2()
     repeats = repeatedsequences(ranges)
     println(sum(repeats))
 end
+
+function main3()
+    ranges = [1:10000000000]
+    doubles = doublesequences(ranges)
+    println(sum(doubles))
+    repeats = repeatedsequences(ranges)
+    println(sum(repeats))
+end
