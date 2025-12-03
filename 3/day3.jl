@@ -28,3 +28,12 @@ function main1()
     input = read_input_file(input_file_path("day3.txt"))
     println(totaljoltage(input, 2))
 end
+
+
+"""
+Solves day 3 part 2
+"""
+function main2()
+    input = read_input_file(input_file_path("day3.txt"))
+    println(totaljoltage(input, 12))
+end
