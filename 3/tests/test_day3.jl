@@ -1,5 +1,5 @@
 using Test
-include("../day3.jl")
+include("../day3_threaded.jl")
 
 @testset "highestjoltage" begin
     @test highestjoltage("987654321111111", 2) == 98
