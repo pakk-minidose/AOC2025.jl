@@ -1,7 +1,7 @@
 include("../utils/read_input.jl")
 using .InputLoader
 
-function highestjoltage(bank::String, ndigits::Int)::Int
+function highestjoltage(bank::Union{String, SubString{String}}, ndigits::Int)::Int
     int_bank = [parse(Int, c) for c in bank]
     endoffset = ndigits - 1
     startoffset = 0
@@ -14,12 +14,13 @@ function highestjoltage(bank::String, ndigits::Int)::Int
         startoffset = ix
         endoffset = ndigits - n - 1
     end
-    result = sum(int_bank[ix]*10^(n-1) for (n, ix) in enumerate(reverse(indices)))
+    result = sum(int_bank[ix]*10^(n-1) for (n, ix) in enumerate(view(indices, ndigits:-1:1)))
     return result
 end
 
 function totaljoltage(input, ndigits)
-    sum(highestjoltage(row, ndigits) for row in eachline(IOBuffer(input)))
+    rows = split(input, '\n')[1:end-1]
+    sum(highestjoltage(row, ndigits) for row in rows)
 end
 
 

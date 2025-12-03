@@ -5,10 +5,13 @@ const input = read_input_file(input_file_path("day3.txt"))
 # 8201 for the original version
 # 3401 new version with view
 # 3001 with preallocated indices, now about 50% of allocations happens when reading the input
+# 2001 when replacing eachline with split
+# 1610 when replacing reverse with view
 
 
-using Pkg, Profile, PProf
+using Pkg, Profile
 Pkg.activate(".")
+using PProf
 
 Profile.Allocs.clear()
 Profile.Allocs.@profile sample_rate=1.0 totaljoltage(input, 12)
