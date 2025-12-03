@@ -64,3 +64,16 @@ BenchmarkTools.Trial: 10000 samples with 1 evaluation per sample.
 
  Memory estimate: 346.97 KiB, allocs estimate: 2402.
 =#
+#=new multithreaded runtime
+julia> @benchmark totaljoltage($input, 12)
+BenchmarkTools.Trial: 10000 samples with 1 evaluation per sample.
+ Range (min … max):   68.084 μs …   6.290 ms  ┊ GC (min … max):  0.00% … 96.33%
+ Time  (median):      78.875 μs               ┊ GC (median):     0.00%
+ Time  (mean ± σ):   101.164 μs ± 176.964 μs  ┊ GC (mean ± σ):  16.71% ±  9.81%
+
+  █▄▂▁                                                          ▁
+  ████▇██▇▅▄▃▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▃▃▄▄▄▆▄▅▆ █
+  68.1 μs       Histogram: log(frequency) by time       1.16 ms <
+
+ Memory estimate: 358.28 KiB, allocs estimate: 2632.
+=#
