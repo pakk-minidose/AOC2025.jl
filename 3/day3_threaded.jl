@@ -2,7 +2,7 @@ include("../utils/read_input.jl")
 using .InputLoader
 
 function highestjoltage(bank::Union{String, SubString{String}}, ndigits::Int)::Int
-    int_bank = [parse(Int, c) for c in bank]
+    int_bank = [Int(c-'0') for c in bank]
     endoffset = ndigits - 1
     startoffset = 0
     indices = Vector{Int}(undef, ndigits)

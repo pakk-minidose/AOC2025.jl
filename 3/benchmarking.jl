@@ -14,6 +14,7 @@ Pkg.activate(".")
 using PProf
 
 Profile.Allocs.clear()
+totaljoltage(input, 12)
 Profile.Allocs.@profile sample_rate=1.0 totaljoltage(input, 12)
 p = Profile.Allocs.fetch()
 length(p.allocs)
@@ -27,7 +28,7 @@ Profile.print()
 # currently the biggest slowdown is in the parsing of the string input to a list of integers and in the argmax
 
 using BenchmarkTools
-@benchmark totaljoltage(input, 12)
+@benchmark totaljoltage($input, 12)
 #=original benchmark
 julia> @benchmark totaljoltage($input, 12)
 BenchmarkTools.Trial: 10000 samples with 1 evaluation per sample.

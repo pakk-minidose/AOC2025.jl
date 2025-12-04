@@ -2,7 +2,7 @@ include("../utils/read_input.jl")
 using .InputLoader
 
 function highestjoltage(bank::Union{String, SubString{String}}, ndigits::Int)::Int
-    int_bank = [parse(Int, c) for c in bank]
+    int_bank = [Int(c-'0') for c in bank]
     endoffset = ndigits - 1
     startoffset = 0
     indices = Vector{Int}(undef, ndigits)
@@ -19,7 +19,7 @@ function highestjoltage(bank::Union{String, SubString{String}}, ndigits::Int)::I
 end
 
 function totaljoltage(input, ndigits)
-    rows = split(input, '\n')[1:end-1]
+    rows = collect(split(input, '\n')[1:end-1])
     sum(highestjoltage(row, ndigits) for row in rows)
 end
 
