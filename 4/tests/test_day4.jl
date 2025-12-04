@@ -26,5 +26,9 @@ const input=
 end
 
 @testset "allaccessible" begin
-    @test allaccessible(parseinput(input)) == 13
+    @test allaccessible(input) == 13
+end
+
+@testset "allaccessible!" begin
+    @test allaccessible!(input) == 43
 end

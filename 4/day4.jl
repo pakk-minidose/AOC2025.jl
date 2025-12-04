@@ -34,7 +34,8 @@ function isaccessible(ix, rolls_map)
     return sum(rolls_map[proximity(ix)]) ≤ 4
 end
 
-function allaccessible(rolls_map)
+function allaccessible(input)
+    rolls_map = parseinput(input)
     accessible_rolls = 0
     for roll_ix in findrolls(rolls_map)
         if isaccessible(roll_ix, rolls_map)
@@ -44,8 +45,35 @@ function allaccessible(rolls_map)
     return accessible_rolls
 end
 
+function accessall!(rolls_map)
+    accessible_rolls = 0
+    for roll_ix in findrolls(rolls_map)
+        if isaccessible(roll_ix, rolls_map)
+            accessible_rolls += 1
+            rolls_map[roll_ix] = false
+        end
+    end
+    return accessible_rolls
+end
+
+function allaccessible!(input)
+    rolls_map = parseinput(input)
+    last_accessed = -1
+    accessible_rolls = 0
+    while last_accessed != 0
+        last_accessed = accessall!(rolls_map)
+        accessible_rolls += last_accessed
+    end
+    return accessible_rolls
+end
+
+
 function main1()
     input = read_input_file(input_file_path("day4.txt"))
-    rolls_map = parseinput(input)
     println(allaccessible(rolls_map))
+end
+
+function main2()
+    input = read_input_file(input_file_path("day4.txt"))
+    println(allaccessible!(input))
 end
